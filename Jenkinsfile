@@ -33,8 +33,14 @@ pipeline {
     }
 
     stage('Update k8s repository') {
+      agent {
+        docker {
+          image 'ubuntu:22.04'
+        }
+      }
       steps {
-        sh 'kustomize version'
+        git 'https://github.com/jersonsatoru/gitops-in-practice'
+        sh 'ls -lha'
       }
     }
   }
