@@ -24,7 +24,7 @@ pipeline {
           def app = docker.build "${IMAGE_NAME}"
           docker.withRegistry(
             "http://${params.CONTAINER_REGISTRY}",
-            "--build-args SHORT_SHA=${SHORT_SHA}"
+            "--build-args SHORT_SHA=${SHORT_SHA} ."
           ) {
             app.push()
           }
