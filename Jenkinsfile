@@ -25,7 +25,8 @@ pipeline {
         script {
           def IMAGE_NAME="${params.CONTAINER_REGISTRY}/user-api:${GIT_COMMIT}"
           def app = docker.build IMAGE_NAME
-          docker.withRegistry("${params.CONTAINER_REGISTRY}") {
+          echo "${params.CONTAINER_REGISTRY}"
+          docker.withRegistry("${params.CONTAINER_REGISTRY}", "") {
             app.push()
           }
         }
