@@ -13,11 +13,13 @@ pipeline {
     stage('Docker build') {
       steps {
         script {
-          def image_name = "localhost:5001:${GIT_COMMIT}"
-          def app = docker.build(image_name, ".")
-          docker.withRegistry("http://localhost:5001", "") {
-            app.push()
-          }
+          echo "${GIT_COMMIT}"
+          def IMAGE_NAME = "localhost:5001:${GIT_COMMIT}"
+          echo "${IMAGE_NAME}"
+          def app = docker.build("${IMAGE_NAME}", ".")
+          // docker.withRegistry("http://localhost:5001", "") {
+          //   app.push()
+          // }
         }
       }
     }
