@@ -1,4 +1,13 @@
 def SHORT_SHA
+def CURRENT_ENV
+
+def getCurrentEnv() {
+  if (env.BRANCH_NAME == 'develop') {
+    CURRENT_ENV='development'
+  } else {
+    CURRENT_ENV='local'
+  }
+}
 
 pipeline {
   agent any
@@ -20,6 +29,7 @@ pipeline {
     stage('Docker build and push') {
       steps {
         script {
+          getCurrentEnv()
           SHORT_SHA = env.GIT_COMMIT.take(7)
           def IMAGE_NAME="${params.CONTAINER_REGISTRY}/user-api:${SHORT_SHA}"
           echo "${IMAGE_NAME}"
@@ -48,6 +58,12 @@ pipeline {
           sh 'ls -lha'
           sh "kustomize edit set image localhost:5001/user-api:${SHORT_SHA}"
         }
+
+        sh 'git config --global user.name jenkins'
+        sh 'git config --global user.email jenkins@jersonsatoru.com.br'
+        sh 'git add -A'
+        sh "git commit -m 'env: ${CURRENT_ENV}: hash: ${SHORT_SHA}'"
+        sh 'git push origin develop'
       }
     }
   }
