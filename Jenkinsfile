@@ -18,11 +18,14 @@ pipeline {
     stage('Docker build and push') {
       steps {
         script {
-          echo env.GIT_COMMIT.take(7)
-          def IMAGE_NAME="${params.CONTAINER_REGISTRY}/user-api:latest"
+          def SHORT_SHA env.GIT_COMMIT.take(7)
+          def IMAGE_NAME="${params.CONTAINER_REGISTRY}/user-api:${SHORT_SHA}"
           echo "${IMAGE_NAME}"
           def app = docker.build "${IMAGE_NAME}"
-          docker.withRegistry("http://${params.CONTAINER_REGISTRY}", "") {
+          docker.withRegistry(
+            "http://${params.CONTAINER_REGISTRY}",
+            "--build-args SHORT_SHA=${SHORT_SHA}"
+          ) {
             app.push()
           }
         }
