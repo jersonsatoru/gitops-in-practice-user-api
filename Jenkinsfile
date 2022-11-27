@@ -23,13 +23,19 @@ pipeline {
     stage('Docker build and push') {
       steps {
         script {
-          params.IMAGE_NAME="${params.CONTAINER_REGISTRY}/user-api:${GIT_COMMIT}"
-          def app = docker.build "params.IMAGE_NAME"
+          def IMAGE_NAME="${params.CONTAINER_REGISTRY}/user-api:${GIT_COMMIT}"
+          def app = docker.build IMAGE_NAME
           docker.withRegistry("${params.CONTAINER_REGISTRY}") {
             app.push()
           }
         }
       }
     }
+
+    stage('Update k8s repository' {
+      steps {
+
+      }
+    })
   }
 }

@@ -1,3 +1,5 @@
 node_modules
 jenkins_ssh
 jenkins_ssh.*
+jenkins_k8s
+jenkins_k8s.*
