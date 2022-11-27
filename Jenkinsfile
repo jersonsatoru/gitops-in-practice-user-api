@@ -7,19 +7,19 @@ pipeline {
 
   parameters {
     string(
-      name: CONTAINER_REGISTRY,
+      name: 'CONTAINER_REGISTRY',
       defaultValue: 'localhost:5001',
       description: 'Container registry'
     )
 
     string(
-      name: IMAGE_TAG,
+      name: 'IMAGE_TAG',
       defaultValue: "${GIT_COMMIT}",
       description: 'Image tag'
     )
 
     string(
-      name: IMAGE_NAME,
+      name: 'IMAGE_NAME',
       defaultValue: "",
       description: 'Image name'
     )
