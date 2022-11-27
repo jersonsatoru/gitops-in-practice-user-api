@@ -59,13 +59,14 @@ pipeline {
           sh "kustomize edit set image localhost:5001/user-api:${SHORT_SHA}"
         }
 
-        withCredentials([sshUserPrivateKey(credentialsId: "jenkins_k8s", keyFileVariable: 'SSH_KEY')]) {
+        // withCredentials([sshUserPrivateKey(credentialsId: "jenkins_k8s", keyFileVariable: 'SSH_KEY')]) {
           sh 'git config --global user.name jenkins'
           sh 'git config --global user.email jenkins@jersonsatoru.com.br'
           sh 'git add -A'
           sh "git commit -m 'env: ${CURRENT_ENV}: hash: ${SHORT_SHA}'"
+          sh "git remote -v"
           sh "GIT_SSH_COMMAND=\"ssh -i ${SSH_KEY}\" git push origin develop"
-        }
+        // }
       }
     }
   }
