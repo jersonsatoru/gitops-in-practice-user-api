@@ -59,7 +59,7 @@ pipeline {
           sh "kustomize edit set image localhost:5001/user-api:${SHORT_SHA}"
         }
 
-        withCredentials([[$class: 'SSHUserPrivateKey', credentialsId: "jenkins_k8s"]]) {
+        withCredentials([[$class: 'sshUserPrivateKey', credentialsId: "jenkins_k8s"]]) {
           sh 'git config --global user.name jenkins'
           sh 'git config --global user.email jenkins@jersonsatoru.com.br'
           sh 'git add -A'
