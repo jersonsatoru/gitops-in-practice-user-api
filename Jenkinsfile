@@ -47,7 +47,7 @@ pipeline {
         sh 'ls -lha'
         sh 'cd k8s/projects/user-api/overlays/development'
         echo "${SHORT_SHA}"
-        sh "kustomize edit image localhost:5001/user-api:${SHORT_SHA}"
+        sh "kustomize edit set image localhost:5001/user-api:${SHORT_SHA}"
       }
     }
   }
