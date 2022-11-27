@@ -8,7 +8,7 @@ pipeline {
   parameters {
     string(
       name: 'CONTAINER_REGISTRY',
-      defaultValue: 'localhost:5001',
+      defaultValue: 'http://localhost:5001',
       description: 'Container registry'
     )
 
