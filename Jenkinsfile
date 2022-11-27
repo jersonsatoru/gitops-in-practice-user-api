@@ -10,9 +10,9 @@ pipeline {
       steps {
         script {
           def app = docker.build 'localhost:5001/user-api:latest'
-          // docker.withRegistry("http://localhost:5001", "") {
-          //   app.push()
-          // }
+          docker.withRegistry("http://localhost:5001", "") {
+            app.push()
+          }
         }
       }
     }
