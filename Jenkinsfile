@@ -18,7 +18,7 @@ pipeline {
     stage('Docker build and push') {
       steps {
         script {
-          echo "${GIT_COMMIT, length=6}"
+          echo env.GIT_COMMIT
           def IMAGE_NAME="${params.CONTAINER_REGISTRY}/user-api:latest"
           def app = docker.build IMAGE_NAME
           docker.withRegistry("${params.CONTAINER_REGISTRY}", "") {
