@@ -5,10 +5,20 @@ pipeline {
     }
   }
 
+  options {
+    timestamps()
+  }
+
   stages {
-    stage('say Hello') {
+    stage('Docker build') {
       steps {
-        echo "Say Hello"
+        script {
+          image_name = "localhost:5001:${GIT_COMMIT}"
+          app = docker.build(image_name, ".")
+          docker.withRegistry("http://localhost:5001", "") {
+            app.push()
+          }
+        }
       }
     }
   }
