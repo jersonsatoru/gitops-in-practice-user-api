@@ -32,10 +32,10 @@ pipeline {
       }
     }
 
-    stage('Update k8s repository' {
+    stage('Update k8s repository') {
       steps {
-
+        sh 'kustomize version'
       }
-    })
+    }
   }
 }
