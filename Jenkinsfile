@@ -13,11 +13,7 @@ pipeline {
     stage('Docker build') {
       steps {
         script {
-          sh 'ls -lha'
-          echo "${GIT_COMMIT}"
-          def IMAGE_NAME = "localhost:5001:${GIT_COMMIT}"
-          echo "${IMAGE_NAME}"
-          def app = docker.build 'localhost:5001:latest'
+          def app = docker.build 'localhost:5001/user-api:latest'
           // docker.withRegistry("http://localhost:5001", "") {
           //   app.push()
           // }
