@@ -64,7 +64,7 @@ pipeline {
           sh 'git config --global user.email jenkins@jersonsatoru.com.br'
           sh 'git add -A'
           sh "git commit -m 'env: ${CURRENT_ENV}: hash: ${SHORT_SHA}'"
-          sh "git remote -v"
+          sh "git branch -v"
           sh "git push origin develop"
           // sh "GIT_SSH_COMMAND=\"ssh -i ${SSH_KEY}\" git push origin develop"
         // }
