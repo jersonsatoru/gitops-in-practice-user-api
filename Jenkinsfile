@@ -44,9 +44,8 @@ pipeline {
                   branches: [[name: 'develop']],
                   userRemoteConfigs: [[credentialsId:  'jenkins_k8s',
                                       url: 'git@github.com:jersonsatoru/gitops-in-practice.git']]])
-        sh 'ls -lha'
         sh 'cd k8s/projects/user-api/overlays/development'
-        echo "${SHORT_SHA}"
+        sh 'ls -lha'
         sh "kustomize edit set image localhost:5001/user-api:${SHORT_SHA}"
       }
     }
