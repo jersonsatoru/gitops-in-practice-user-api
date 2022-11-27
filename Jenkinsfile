@@ -1,11 +1,11 @@
 def SHORT_SHA
 def CURRENT_ENV
 
-def getCurrentEnv() {
-  if (env.BRANCH_NAME == 'develop') {
-    CURRENT_ENV='development'
+def getCurrentEnv(branch_name) {
+  if (branch_name == 'develop') {
+    return 'development'
   } else {
-    CURRENT_ENV='local'
+    return 'local'
   }
 }
 
@@ -29,7 +29,7 @@ pipeline {
     stage('Docker build and push') {
       steps {
         script {
-          getCurrentEnv()
+          CURRENT_ENV = getCurrentEnv("${env.BRANCH_NAME}")
           SHORT_SHA = env.GIT_COMMIT.take(7)
           def IMAGE_NAME="${params.CONTAINER_REGISTRY}/user-api:${SHORT_SHA}"
           echo "${IMAGE_NAME}"
