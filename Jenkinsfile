@@ -3,7 +3,7 @@ def CURRENT_ENV
 
 def getCurrentEnv(branch_name) {
   if (branch_name == 'develop') {
-    return 'development'
+    return 'develop'
   } else {
     return 'local'
   }
@@ -59,11 +59,13 @@ pipeline {
           sh "kustomize edit set image localhost:5001/user-api:${SHORT_SHA}"
         }
 
-        sh 'git config --global user.name jenkins'
-        sh 'git config --global user.email jenkins@jersonsatoru.com.br'
-        sh 'git add -A'
-        sh "git commit -m 'env: ${CURRENT_ENV}: hash: ${SHORT_SHA}'"
-        sh 'git push origin develop'
+        withCredentials([sshUserPrivateKey(credentialsId: "jenkins_k8s")]) {
+          sh 'git config --global user.name jenkins'
+          sh 'git config --global user.email jenkins@jersonsatoru.com.br'
+          sh 'git add -A'
+          sh "git commit -m 'env: ${CURRENT_ENV}: hash: ${SHORT_SHA}'"
+          sh "git push origin develop"
+        }
       }
     }
   }
