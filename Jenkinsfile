@@ -18,7 +18,7 @@ pipeline {
     stage('Docker build and push') {
       steps {
         script {
-          def SHORT_SHA env.GIT_COMMIT.take(7)
+          def SHORT_SHA = env.GIT_COMMIT.take(7)
           def IMAGE_NAME="${params.CONTAINER_REGISTRY}/user-api:${SHORT_SHA}"
           echo "${IMAGE_NAME}"
           def app = docker.build "${IMAGE_NAME}"
