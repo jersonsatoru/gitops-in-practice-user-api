@@ -23,7 +23,7 @@ pipeline {
           echo "${IMAGE_NAME}"
           def app = docker.build(
             "${IMAGE_NAME}",
-            "--build-args SHORT_SHA=${SHORT_SHA} ."
+            "--build-arg=SHORT_SHA=${SHORT_SHA} ."
           )
           docker.withRegistry("http://${params.CONTAINER_REGISTRY}") {
             app.push()
