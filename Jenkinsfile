@@ -1,3 +1,5 @@
+def SHORT_SHA
+
 pipeline {
   agent any
 
@@ -18,7 +20,7 @@ pipeline {
     stage('Docker build and push') {
       steps {
         script {
-          def SHORT_SHA = env.GIT_COMMIT.take(7)
+          SHORT_SHA = env.GIT_COMMIT.take(7)
           def IMAGE_NAME="${params.CONTAINER_REGISTRY}/user-api:${SHORT_SHA}"
           echo "${IMAGE_NAME}"
           def app = docker.build(
@@ -46,7 +48,9 @@ pipeline {
                   branches: [[name: 'develop']],
                   userRemoteConfigs: [[credentialsId:  'jenkins_k8s',
                                       url: 'git@github.com:jersonsatoru/gitops-in-practice.git']]])
-        sh 'ls -lha'
+        sh 'cd k8s/projects/auth-api/overlays/development'
+        echo "${SHORT_SHA}"
+        sh "kustomize edit image localhost:5001/user-api:${SHORT_SHA}"
       }
     }
   }
