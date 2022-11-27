@@ -8,7 +8,7 @@ pipeline {
   parameters {
     string(
       name: 'CONTAINER_REGISTRY',
-      defaultValue: 'http://localhost:5001',
+      defaultValue: 'localhost:5001',
       description: 'Container registry'
     )
 
@@ -18,10 +18,10 @@ pipeline {
     stage('Docker build and push') {
       steps {
         script {
-          echo env.GIT_COMMIT
+          echo env.GIT_COMMIT.take(7)
           def IMAGE_NAME="${params.CONTAINER_REGISTRY}/user-api:latest"
           def app = docker.build IMAGE_NAME
-          docker.withRegistry("${params.CONTAINER_REGISTRY}", "") {
+          docker.withRegistry("http://${params.CONTAINER_REGISTRY}", "") {
             app.push()
           }
         }
