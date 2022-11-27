@@ -39,7 +39,10 @@ pipeline {
         }
       }
       steps {
-        git 'https://github.com/jersonsatoru/gitops-in-practice'
+        checkout([$class: 'GitSCM',
+                  branches: [[name: 'develop']],
+                  userRemoteConfigs: [[credentialsId:  'jenkins_k8s',
+                                      url: 'ssh://git@github.com:jersonsatoru/gitops-in-practice.git']]])
         sh 'ls -lha'
       }
     }
