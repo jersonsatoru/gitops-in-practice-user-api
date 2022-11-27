@@ -21,11 +21,11 @@ pipeline {
           def SHORT_SHA = env.GIT_COMMIT.take(7)
           def IMAGE_NAME="${params.CONTAINER_REGISTRY}/user-api:${SHORT_SHA}"
           echo "${IMAGE_NAME}"
-          def app = docker.build "${IMAGE_NAME}"
-          docker.withRegistry(
-            "http://${params.CONTAINER_REGISTRY}",
+          def app = docker.build(
+            "${IMAGE_NAME}",
             "--build-args SHORT_SHA=${SHORT_SHA} ."
-          ) {
+          )
+          docker.withRegistry("http://${params.CONTAINER_REGISTRY}") {
             app.push()
           }
         }
