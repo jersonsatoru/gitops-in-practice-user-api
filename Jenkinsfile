@@ -3,7 +3,6 @@ pipeline {
 
   options {
     timestamps()
-    skipDefaultCheckout()
   }
 
   parameters {
@@ -34,6 +33,9 @@ pipeline {
     }
 
     stage('Update k8s repository') {
+      options {
+        skipDefaultCheckout()
+      }
       agent {
         docker {
           image 'ubuntu:22.04'
