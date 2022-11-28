@@ -68,6 +68,8 @@ pipeline {
           sh "git branch -v"
           sh "GIT_SSH_COMMAND=\"ssh -i ${SSH_KEY}\" git push origin develop"
         }
+
+        echo 'WSL2'
       }
     }
   }
