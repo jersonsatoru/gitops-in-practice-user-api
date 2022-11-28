@@ -52,14 +52,14 @@ pipeline {
         cleanWs()
         checkout([$class: 'GitSCM',
                   branches: [[name: 'develop']],
-                  userRemoteConfigs: [[credentialsId:  'jenkins_k8s',
+                  userRemoteConfigs: [[credentialsId:  'k8s',
                                       url: 'git@github.com:jersonsatoru/gitops-in-practice.git']]])
         dir('k8s/projects/user-api/overlays/development') {
           sh 'ls -lha'
           sh "kustomize edit set image localhost:5001/user-api:${SHORT_SHA}"
         }
 
-        withCredentials([sshUserPrivateKey(credentialsId: "jenkins_k8s", keyFileVariable: 'SSH_KEY')]) {
+        withCredentials([sshUserPrivateKey(credentialsId: "k8s", keyFileVariable: 'SSH_KEY')]) {
           sh 'git config --global user.name jenkins'
           sh 'git config --global user.email jenkins@jersonsatoru.com.br'
           sh 'git checkout develop'
