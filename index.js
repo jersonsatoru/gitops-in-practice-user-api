@@ -7,6 +7,7 @@ app.get('/v1/users', (req, res) => {
             {id: 1, name: 'jerson satoru uyekita'},
             {id: 2, name: 'sabrina galvão bento'},
             {id: 3, name: 'batata 2'},
+            {id: 4, name: 'testadno 3'},
         ]
     })
 });
