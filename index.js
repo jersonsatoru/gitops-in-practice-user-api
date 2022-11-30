@@ -5,7 +5,8 @@ app.get('/v1/users', (req, res) => {
     return res.json({
         data: [
             {id: 1, name: 'jerson satoru uyekita'},
-            {id: 2, name: 'sabrina galvão bento'}
+            {id: 2, name: 'sabrina galvão bento'},
+            {id: 3, name: 'batata 2'},
         ]
     })
 });
