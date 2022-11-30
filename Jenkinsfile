@@ -58,7 +58,7 @@ pipeline {
           sh "kustomize edit set image localhost:5001/user-api:${SHORT_SHA}"
         }
 
-        withCredentials([sshUserPrivateKey(credentialsId: "k8s", keyFileVariable: 'SSH_KEY')]) {
+        withCredentials([sshUserPrivateKey(credentialsId: "devops", keyFileVariable: 'SSH_KEY')]) {
           sh 'git config --global user.name jenkins'
           sh 'git config --global user.email jenkins@jersonsatoru.com.br'
           sh 'git checkout develop'
